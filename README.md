@@ -1,3 +1,11 @@
 # adsb-hassio-sensors
-Home assistant : Aircraft sensors for MaxWinterstein/adsb-multi-portal-feeder addon
-Supported feeders : adsb exchange , adsb.fi
+
+  Aircraft sensors for Home Assistant [adsb-multi-portal-feeder](https://github.com/MaxWinterstein/homeassistant-addons/tree/main/adsb-multi-portal-feeder) add-on by [MaxWinterstein](https://github.com/MaxWinterstein)
+  
+  
+
+## Supported feeders
+
+  adsbexchange.com
+
+  adsb.fi
