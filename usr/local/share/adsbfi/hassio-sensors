@@ -1,0 +1,51 @@
+#!/bin/bash
+
+
+doit_adsbfi(){
+  ADSBFI_TOTAL_JSON=$(jq '{state: (.aircraft_count_by_type.adsb_icao + .aircraft_count_by_type.mode_s + .aircraft_count_by_type.mlat) ,
+                     attributes: {"friendly_name": "Adsb Fi Status",
+                                  "icon": "mdi:airplane",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "adsbfi_status"} }' \
+                     /run/adsbfi-feed/status.json )
+  
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$ADSBFI_TOTAL_JSON" http://supervisor/core/api/states/sensor.adsbfi_status
+  
+  
+  ADSBFI_ICAO_JSON=$(jq '{state: .aircraft_count_by_type.adsb_icao ,
+                    attributes: {"friendly_name": "Adsb Fi ADS-B",
+                                 "icon": "mdi:airplane",
+                                 "unit_of_measurement": "aircraft",
+                                 "unique_id": "adsbfi_icao"} }' \
+                    /run/adsbfi-feed/status.json )
+  
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
+    -d "$ADSBFI_ICAO_JSON" http://supervisor/core/api/states/sensor.adsbfi_icao
+  
+  ADSBFI_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
+                     attributes: {"friendly_name": "Adsb Fi Mode-S",
+                                  "icon": "mdi:airplane",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "adsbfi_mode_s"} }' \
+                     /run/adsbfi-feed/status.json )
+  
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
+    -d "$ADSBFI_MODES_JSON" http://supervisor/core/api/states/sensor.adsbfi_mode_s
+  
+  ADSBFI_MLAT_JSON=$(jq '{state: .aircraft_count_by_type.mlat ,
+                    attributes: {"friendly_name": "Adsb Fi MLAT",
+                                 "icon": "mdi:airplane",
+                                 "unit_of_measurement": "aircraft",
+                                 "unique_id": "adsbfi_mlat"} }' \
+                    /run/adsbfi-feed/status.json )
+  
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
+    -d "$ADSBFI_MLAT_JSON" http://supervisor/core/api/states/sensor.adsbfi_mlat
+}
+
+echo "Starting Adsb.fi hassio sensors api"
+
+while sleep 30; do
+  doit_adsbfi;
+done
