@@ -2,9 +2,11 @@
 
 
 doit_adsbfi(){
+
   ADSBFI_TOTAL_JSON=$(jq '{state: (.aircraft_count_by_type.adsb_icao + .aircraft_count_by_type.mode_s + .aircraft_count_by_type.mlat) ,
                      attributes: {"friendly_name": "Adsb.fi Status",
                                   "icon": "mdi:airplane",
+                                  "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
                                   "unique_id": "adsbfi_status"} }' \
                      /run/adsbfi-feed/status.json )
@@ -16,6 +18,7 @@ doit_adsbfi(){
   ADSBFI_ICAO_JSON=$(jq '{state: .aircraft_count_by_type.adsb_icao ,
                     attributes: {"friendly_name": "Adsb.fi ADS-B",
                                  "icon": "mdi:airplane",
+                                 "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
                                  "unique_id": "adsbfi_icao"} }' \
                     /run/adsbfi-feed/status.json )
@@ -26,6 +29,7 @@ doit_adsbfi(){
   ADSBFI_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
                      attributes: {"friendly_name": "Adsb.fi Mode-S",
                                   "icon": "mdi:airplane",
+                                  "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
                                   "unique_id": "adsbfi_mode_s"} }' \
                      /run/adsbfi-feed/status.json )
@@ -36,6 +40,7 @@ doit_adsbfi(){
   ADSBFI_MLAT_JSON=$(jq '{state: .aircraft_count_by_type.mlat ,
                     attributes: {"friendly_name": "Adsb.fi MLAT",
                                  "icon": "mdi:airplane",
+                                 "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
                                  "unique_id": "adsbfi_mlat"} }' \
                     /run/adsbfi-feed/status.json )
