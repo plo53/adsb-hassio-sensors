@@ -7,7 +7,7 @@ doit_adsbexchange(){
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
-                                  "unique_id": "adsb_status"} }' \
+                                  "unique_id": "adsbx_total"} }' \
                      /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
@@ -19,7 +19,7 @@ doit_adsbexchange(){
                                  "icon": "mdi:airplane",
                                  "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
-                                 "unique_id": "adsb_icao"} }' \
+                                 "unique_id": "adsbx_icao"} }' \
                     /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
@@ -30,7 +30,7 @@ doit_adsbexchange(){
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
-                                  "unique_id": "adsb_mode_s"} }' \
+                                  "unique_id": "adsbx_mode_s"} }' \
                      /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
@@ -41,7 +41,7 @@ doit_adsbexchange(){
                                  "icon": "mdi:airplane",
                                  "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
-                                 "unique_id": "adsb_mlat"} }' \
+                                 "unique_id": "adsbx_mlat"} }' \
                     /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
