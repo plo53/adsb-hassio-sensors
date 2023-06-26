@@ -5,6 +5,7 @@ doit_adsbexchange(){
   ADSBX_TOTAL_JSON=$(jq '{state: (.aircraft_count_by_type.adsb_icao + .aircraft_count_by_type.mode_s + .aircraft_count_by_type.mlat) ,
                      attributes: {"friendly_name": "Adsb Exchange Status",
                                   "icon": "mdi:airplane",
+                                  "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
                                   "unique_id": "adsb_status"} }' \
                      /run/adsbexchange-feed/status.json )
@@ -16,6 +17,7 @@ doit_adsbexchange(){
   ADSBX_ICAO_JSON=$(jq '{state: .aircraft_count_by_type.adsb_icao ,
                     attributes: {"friendly_name": "Adsb Exchange ADS-B",
                                  "icon": "mdi:airplane",
+                                 "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
                                  "unique_id": "adsb_icao"} }' \
                     /run/adsbexchange-feed/status.json )
@@ -26,6 +28,7 @@ doit_adsbexchange(){
   ADSBX_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
                      attributes: {"friendly_name": "Adsb Exchange Mode-S",
                                   "icon": "mdi:airplane",
+                                  "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
                                   "unique_id": "adsb_mode_s"} }' \
                      /run/adsbexchange-feed/status.json )
@@ -36,6 +39,7 @@ doit_adsbexchange(){
   ADSBX_MLAT_JSON=$(jq '{state: .aircraft_count_by_type.mlat ,
                     attributes: {"friendly_name": "Adsb Exchange MLAT",
                                  "icon": "mdi:airplane",
+                                 "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
                                  "unique_id": "adsb_mlat"} }' \
                     /run/adsbexchange-feed/status.json )
