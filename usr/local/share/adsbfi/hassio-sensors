@@ -8,7 +8,7 @@ doit_adsbfi(){
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
                                   "unit_of_measurement": "aircraft",
-                                  "unique_id": "adsbfi_status"} }' \
+                                  "unique_id": "adsbfi_total"} }' \
                      /run/adsbfi-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
