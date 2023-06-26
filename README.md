@@ -10,6 +10,8 @@
 
   adsb.fi
 
+  planefinder.net
+
 ##
 
 ![sensor aircraft tracked](https://github.com/plo53/adsb-hassio-sensors/blob/master/media/Home%20Assistant%20ADS-B%20sensors.jpg)
