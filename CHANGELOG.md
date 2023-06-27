@@ -1,7 +1,7 @@
 ## [1.1.0] - 2023-06-26
 
-- New Feature / Planefinder support
-- New Feature / Opensky support
+- New Feature : `Opensky` feeder support
+- New Feature : `Planefinder` feeder support
 - Updates / Long-term Statistics for all sensors
 - Fix / Sensor unique_id issue
 
