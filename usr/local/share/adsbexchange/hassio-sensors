@@ -11,7 +11,7 @@ doit_adsbexchange(){
                      /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
-    -d "$ADSBX_TOTAL_JSON" http://supervisor/core/api/states/sensor.adsb_status
+    -d "$ADSBX_TOTAL_JSON" http://supervisor/core/api/states/sensor.adsbx_status
   
   
   ADSBX_ICAO_JSON=$(jq '{state: .aircraft_count_by_type.adsb_icao ,
@@ -19,11 +19,11 @@ doit_adsbexchange(){
                                  "icon": "mdi:airplane",
                                  "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
-                                 "unique_id": "adsbx_icao"} }' \
+                                 "unique_id": "adsbx_adsb"} }' \
                     /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
-    -d "$ADSBX_ICAO_JSON" http://supervisor/core/api/states/sensor.adsb_icao
+    -d "$ADSBX_ICAO_JSON" http://supervisor/core/api/states/sensor.adsbx_adsb
   
   ADSBX_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
                      attributes: {"friendly_name": "Adsb Exchange Mode-S",
@@ -34,7 +34,7 @@ doit_adsbexchange(){
                      /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
-    -d "$ADSBX_MODES_JSON" http://supervisor/core/api/states/sensor.adsb_mode_s
+    -d "$ADSBX_MODES_JSON" http://supervisor/core/api/states/sensor.adsbx_mode_s
   
   ADSBX_MLAT_JSON=$(jq '{state: .aircraft_count_by_type.mlat ,
                     attributes: {"friendly_name": "Adsb Exchange MLAT",
@@ -45,7 +45,7 @@ doit_adsbexchange(){
                     /run/adsbexchange-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
-    -d "$ADSBX_MLAT_JSON" http://supervisor/core/api/states/sensor.adsb_mlat
+    -d "$ADSBX_MLAT_JSON" http://supervisor/core/api/states/sensor.adsbx_mlat
 }
 
 echo "Starting AdsbExchange hassio sensors api"

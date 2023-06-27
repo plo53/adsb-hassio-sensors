@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 doit_adsbfi(){
 
   ADSBFI_TOTAL_JSON=$(jq '{state: (.aircraft_count_by_type.adsb_icao + .aircraft_count_by_type.mode_s + .aircraft_count_by_type.mlat) ,
@@ -20,11 +19,11 @@ doit_adsbfi(){
                                  "icon": "mdi:airplane",
                                  "state_class": "measurement",
                                  "unit_of_measurement": "aircraft",
-                                 "unique_id": "adsbfi_icao"} }' \
+                                 "unique_id": "adsbfi_adsb"} }' \
                     /run/adsbfi-feed/status.json )
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
-    -d "$ADSBFI_ICAO_JSON" http://supervisor/core/api/states/sensor.adsbfi_icao
+    -d "$ADSBFI_ICAO_JSON" http://supervisor/core/api/states/sensor.adsbfi_adsb
   
   ADSBFI_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
                      attributes: {"friendly_name": "Adsb.fi Mode-S",
