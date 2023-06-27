@@ -1,0 +1,32 @@
+#!/bin/bash
+
+doit_opensky(){
+
+  OS_STATS=$(curl -s http://localhost:8080/data/stats.json)
+
+  OS_MODES_JSON=$(echo "$OS_STATS" | jq '{"state": .last1min.remote.modes ,
+                     attributes: {"friendly_name": "Opensky Mode-S Aircraft Rate",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft/min",
+                                  "unique_id": "opensky_modes_pmin"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$OS_MODES_JSON" http://supervisor/core/api/states/sensor.opensky_aircraft_modes_rate
+
+  OS_MODEAC_JSON=$(echo "$OS_STATS" | jq '{"state": .last1min.remote.modeac ,
+                     attributes: {"friendly_name": "Opensky Mode-AC Aircraft Rate",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft/min",
+                                  "unique_id": "opensky_modeac_pmin"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$OS_MODEAC_JSON" http://supervisor/core/api/states/sensor.opensky_aircraft_modeac_rate
+}
+
+echo "Starting Opensky hassio sensors api"
+
+while sleep 30; do
+  doit_opensky;
+done
