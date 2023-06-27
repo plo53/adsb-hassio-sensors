@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 doit_planefinder(){
 
   PF_STATS=$(curl -s http://localhost:30053/ajax/stats)
@@ -16,24 +15,24 @@ doit_planefinder(){
     -d "$PF_BAND_JSON" http://supervisor/core/api/states/sensor.planefinder_bandwidth
 
   PF_MODES_JSON=$(echo "$PF_STATS" | jq '{"state": .total_modes_packets_ps ,
-                     attributes: {"friendly_name": "Planefinder Total Mode-S Packets",
+                     attributes: {"friendly_name": "Planefinder Mode-S Rate",
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
-                                  "unit_of_measurement": "Packet/s",
-                                  "unique_id": "pf_total_modes_ps"} }' )
+                                  "unit_of_measurement": "packet/s",
+                                  "unique_id": "pf_mode_s_rate"} }' )
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
-    -d "$PF_MODES_JSON" http://supervisor/core/api/states/sensor.planefinder_total_modes_packets_ps
+    -d "$PF_MODES_JSON" http://supervisor/core/api/states/sensor.planefinder_mode_s_rate
 
   PF_MODEAC_JSON=$(echo "$PF_STATS" | jq '{"state": .total_modeac_packets_ps ,
-                     attributes: {"friendly_name": "Planefinder Total Mode-AC Packets",
+                     attributes: {"friendly_name": "Planefinder Mode-AC Rate",
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
-                                  "unit_of_measurement": "Packet/s",
-                                  "unique_id": "pf_total_modeac_ps"} }' )
+                                  "unit_of_measurement": "packet/s",
+                                  "unique_id": "pf_mode_ac_rate"} }' )
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
-    -d "$PF_MODEAC_JSON" http://supervisor/core/api/states/sensor.planefinder_total_modeac_packets_ps
+    -d "$PF_MODEAC_JSON" http://supervisor/core/api/states/sensor.planefinder_mode_ac_rate
 }
 
 echo "Starting PlaneFinder hassio sensors api"
