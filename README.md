@@ -6,9 +6,9 @@
 
 ## Supported feeders
 
-  adsbexchange.com
-
   adsb.fi
+
+  adsbexchange.com
 
   opensky-network.org
 
