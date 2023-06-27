@@ -22,7 +22,7 @@ doit_opensky(){
                                   "unique_id": "opensky_mode_ac_rate"} }' )
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
-    -d "$OS_MODEAC_JSON" http://supervisor/core/api/states/sensor.opensky__mode_ac_rate
+    -d "$OS_MODEAC_JSON" http://supervisor/core/api/states/sensor.opensky_mode_ac_rate
 }
 
 echo "Starting Opensky hassio sensors api"
