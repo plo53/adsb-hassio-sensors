@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 doit_planefinder(){
 
   PF_STATS=$(curl -s http://localhost:30053/ajax/stats)
@@ -19,7 +18,7 @@ doit_planefinder(){
                      attributes: {"friendly_name": "Planefinder Total Mode-S Packets",
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
-                                  "unit_of_measurement": "Packet/s",
+                                  "unit_of_measurement": "packet/s",
                                   "unique_id": "pf_total_modes_ps"} }' )
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
@@ -29,7 +28,7 @@ doit_planefinder(){
                      attributes: {"friendly_name": "Planefinder Total Mode-AC Packets",
                                   "icon": "mdi:airplane",
                                   "state_class": "measurement",
-                                  "unit_of_measurement": "Packet/s",
+                                  "unit_of_measurement": "packet/s",
                                   "unique_id": "pf_total_modeac_ps"} }' )
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
