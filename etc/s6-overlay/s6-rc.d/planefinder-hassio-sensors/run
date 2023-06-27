@@ -1,0 +1,10 @@
+#!/command/with-contenv bash
+
+if [ "$SERVICE_ENABLE_PLANEFINDER" != "false" ]; then
+    set -eo pipefail
+
+    /usr/local/share/planefinder/hassio-sensors 2>&1 | mawk -W interactive '{printf "%c[35m[planefinder-hassio]%c[0m %s\n", 27, 27, $0}'
+    # awk -W interactive ...  (prefix log messages with color and "[planefinder-hassio]")
+else
+    tail -f /dev/null
+fi

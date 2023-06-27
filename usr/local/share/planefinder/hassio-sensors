@@ -1,0 +1,43 @@
+#!/bin/bash
+
+
+doit_planefinder(){
+
+  PF_STATS=$(curl -s http://localhost:30053/ajax/stats)
+
+  PF_BAND_JSON=$(echo "$PF_STATS" | jq '{"state": ( .receiver_bytes_in_ps / 1000) ,
+                     attributes: {"friendly_name": "Planefinder Receiver Bandwidth",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "Kb/s",
+                                  "unique_id": "pf_bandwidth"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$PF_BAND_JSON" http://supervisor/core/api/states/sensor.planefinder_bandwidth
+
+  PF_MODES_JSON=$(echo "$PF_STATS" | jq '{"state": .total_modes_packets_ps ,
+                     attributes: {"friendly_name": "Planefinder Total Mode-S Packets",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "Packet/s",
+                                  "unique_id": "pf_total_modes_ps"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$PF_MODES_JSON" http://supervisor/core/api/states/sensor.planefinder_total_modes_packets_ps
+
+  PF_MODEAC_JSON=$(echo "$PF_STATS" | jq '{"state": .total_modeac_packets_ps ,
+                     attributes: {"friendly_name": "Planefinder Total Mode-AC Packets",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "Packet/s",
+                                  "unique_id": "pf_total_modeac_ps"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$PF_MODEAC_JSON" http://supervisor/core/api/states/sensor.planefinder_total_modeac_packets_ps
+}
+
+echo "Starting PlaneFinder hassio sensors api"
+
+while sleep 30; do
+  doit_planefinder;
+done
