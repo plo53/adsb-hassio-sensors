@@ -1,0 +1,5 @@
+{
+  "build_from": {
+    "amd64":"maxwinterstein/homeassistant-adsb-multi-portal-feeder:1.27.0"
+  }
+}
