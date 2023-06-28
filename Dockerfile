@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/maxwinterstein/homeassistant-adsb-multi-portal-feeder-amd64
 FROM $BUILD_FROM
 
 ENV TZ=UTC
