@@ -46,6 +46,17 @@ doit_adsbfi(){
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBFI_MLAT_JSON" http://supervisor/core/api/states/sensor.adsbfi_mlat
+
+  ADSBFI_TRACKS_JSON=$(jq '{state: .total.tracks.all ,
+                    attributes: {"friendly_name": "Adsb.fi Tracks",
+                                 "icon": "mdi:airplane",
+                                 "state_class": "measurement",
+                                 "unit_of_measurement": "track",
+                                 "unique_id": "adsbfi_tracks"} }' \
+                    /run/adsbfi-feed/stats.json )
+  
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
+    -d "$ADSBFI_TRACKS_JSON" http://supervisor/core/api/states/sensor.adsbfi_tracks_all
 }
 
 echo "Starting Adsb.fi hassio sensors api"
