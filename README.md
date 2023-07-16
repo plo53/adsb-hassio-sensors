@@ -10,6 +10,8 @@
 
   adsbexchange.com
 
+  flightradar24.com
+
   opensky-network.org
 
   planefinder.net
@@ -35,9 +37,17 @@
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
+| `flightradar24.com`   | `Flightradar24 Feeder Status`    | sensor.flightradar_feed         |                |
+| `flightradar24.com`   | `Flightradar24 Status`           | sensor.flightradar_status       | aircraft       |
+| `flightradar24.com`   | `Flightradar24 ADS-B`            | sensor.flightradar_adsb         | aircraft       |
+| `flightradar24.com`   | `Flightradar24 Non ADS-B`        | sensor.flightradar_non_adsb     | aircraft       |
+| `flightradar24.com`   | `Flightradar24 MAX Range`        | sensor.flightradar_max_range    | nm             |
+
+| Feeder                | Friendly name                    | Sensor                          | Unit           |
+| --------------------- | -------------------------------- | ------------------------------- | -------------- |
 | `opensky-network.org` | `Opensky Status`                 | sensor.opensky_status           | aircraft       | 
 | `opensky-network.org` | `Opensky ADS-B`                  | sensor.opensky_adsb             | aircraft       | 
-| `opensky-network.org` | `Opensky MLAT`                   | sensor.opensky_mlat             | aircraft       | 
+| `opensky-network.org` | `Opensky MLAT`                   | sensor.opensky_mlat             | aircraft       |
 | `opensky-network.org` | `Opensky Mode-S Rate`            | sensor.opensky_mode_s_rate      | aircraft / min | 
 | `opensky-network.org` | `Opensky Mode-AC Rate`           | sensor.opensky_mode_ac_rate     | aircraft / min | 
 

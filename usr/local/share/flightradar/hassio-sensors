@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Statistics REST api : http://localhost:8754/monitor.json
+
+doit_flightradar(){
+
+  FR_MONITOR=$(curl -s http://localhost:8754/monitor.json | jq '. | {feed_status, feed_num_ac_tracked, feed_num_ac_adsb_tracked, feed_num_ac_non_adsb_tracked}')
+
+  FR_FEED_JSON=$(echo "$FR_MONITOR" | jq '{"state": .feed_status,
+                     attributes: {"friendly_name": "Flightradar24 Feed Status",
+                                  "icon": "mdi:check-network",
+                                  "unique_id": "flightradar_feed"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$FR_FEED_JSON" http://supervisor/core/api/states/binary_sensor.flightradar_feed
+
+
+  FR_AIRCRAFT_JSON=$(echo "$FR_MONITOR" | jq '{"state": .feed_num_ac_tracked,
+                     attributes: {"friendly_name": "Flightradar24 Status",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "flightradar_total"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$FR_AIRCRAFT_JSON" http://supervisor/core/api/states/sensor.flightradar_status
+
+
+  FR_AIRCRAFT_ADSB_JSON=$(echo "$FR_MONITOR" | jq '{"state": .feed_num_ac_adsb_tracked,
+                     attributes: {"friendly_name": "Flightradar24 ADS-B",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "flightradar_adsb"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$FR_AIRCRAFT_ADSB_JSON" http://supervisor/core/api/states/sensor.flightradar_adsb
+
+
+  FR_AIRCRAFT_OTHER_JSON=$(echo "$FR_MONITOR" | jq '{"state": .feed_num_ac_non_adsb_tracked,
+                     attributes: {"friendly_name": "Flightradar24 Non ADS-B",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "flightradar_non_adsb"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$FR_AIRCRAFT_OTHER_JSON" http://supervisor/core/api/states/sensor.flightradar_non_adsb
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$(/usr/local/share/flightradar/fr24_max-range.py)"  http://supervisor/core/api/states/sensor.flightradar_max_range;
+}
+
+echo "Starting Flightradar24 hassio sensors api"
+
+while sleep 30; do
+  doit_flightradar;
+done

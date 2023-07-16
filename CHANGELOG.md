@@ -1,3 +1,7 @@
+## [1.1.2] - 2023-07-16
+
+- New Feature : `Flightradar24` feeder support
+
 ## [1.1.1] - 2023-06-27
 
 - Updates : New total Track sensor for `adsb.fi` , `Adsb Exchange`
