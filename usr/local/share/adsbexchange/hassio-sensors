@@ -80,7 +80,7 @@ doit_adsbexchange(){
   ADSBX_UPTIME_JSON+='{"friendly_name":"Adsb Exchange Uptime","icon":"mdi:timer","unique_id":"adsbx_uptime"}}'
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
-    -d "$ADSBFI_UPTIME_JSON" http://supervisor/core/api/states/sensor.adsbx_uptime
+    -d "$ADSBX_UPTIME_JSON" http://supervisor/core/api/states/sensor.adsbx_uptime
 
 # Max Range
 
