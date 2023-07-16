@@ -1,6 +1,42 @@
 #!/bin/bash
 
+# Aircraft   REST api : http://localhost:30053/ajax/aircraft
+# Statistics REST api : http://localhost:30053/ajax/stats
+
 doit_planefinder(){
+
+  PF_AIRCRAFT=$(curl -s http://localhost:30053/ajax/aircraft)
+
+  PF_AIRCRAFT_JSON=$(echo "$PF_AIRCRAFT" | jq '{"state": [ .aircraft[] ] | length ,
+                     attributes: {"friendly_name": "Planefinder Status",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "planefinder_total"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$PF_AIRCRAFT_JSON" http://supervisor/core/api/states/sensor.planefinder_status
+
+  PF_AIRCRAFT_ADSB_JSON=$(echo "$PF_AIRCRAFT" | jq '{"state": [ .aircraft[] | select(.is_mlat == false) ] | length ,
+                     attributes: {"friendly_name": "Planefinder ADS-B",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "planefinder_adsb"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$PF_AIRCRAFT_ADSB_JSON" http://supervisor/core/api/states/sensor.planefinder_adsb
+
+  PF_AIRCRAFT_MLAT_JSON=$(echo "$PF_AIRCRAFT" | jq '{"state": [ .aircraft[] | select(.is_mlat == true) ] | length ,
+                     attributes: {"friendly_name": "Planefinder MLAT",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "planefinder_mlat"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$PF_AIRCRAFT_MLAT_JSON" http://supervisor/core/api/states/sensor.planefiner_mlat
+
 
   PF_STATS=$(curl -s http://localhost:30053/ajax/stats)
 

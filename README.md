@@ -53,8 +53,6 @@
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
-| Feeder                | Friendly name                    | Sensor                          | Unit           |
-| --------------------- | -------------------------------- | ------------------------------- | -------------- |
 | `planefinder.net`     | `Planefinder Status`             | sensor.planefinder_status       | aircraft       |
 | `planefinder.net`     | `Planefinder ADS-B`              | sensor.planefinder_adsb         | aircraft       |
 | `planefinder.net`     | `Planefinder MLAT`               | sensor.planefinder_mlat         | aircraft       |

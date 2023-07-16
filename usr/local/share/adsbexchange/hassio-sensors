@@ -46,6 +46,18 @@ doit_adsbexchange(){
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBX_MLAT_JSON" http://supervisor/core/api/states/sensor.adsbx_mlat
+
+  ADSBX_TRACKS_JSON=$(jq '{state: .total.tracks.all ,
+                    attributes: {"friendly_name": "Adsb Exchange Tracks",
+                                 "icon": "mdi:airplane",
+                                 "state_class": "measurement",
+                                 "unit_of_measurement": "track",
+                                 "unique_id": "adsbx_tracks"} }' \
+                    /run/adsbexchange-feed/stats.json )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
+    -d "$ADSBX_TRACKS_JSON" http://supervisor/core/api/states/sensor.adsbx_tracks_all
+
 }
 
 echo "Starting AdsbExchange hassio sensors api"

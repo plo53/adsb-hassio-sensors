@@ -1,6 +1,42 @@
 #!/bin/bash
 
+# Aircraft   REST api : http://localhost:8080/data/aircraft.json
+# Statistics REST api : http://localhost:8080/data/stats.json
+
 doit_opensky(){
+
+  OS_AIRCRAFT=$(curl -s http://localhost:8080/data/aircraft.json)
+
+  OS_AIRCRAFT_JSON=$(echo "$OS_AIRCRAFT" | jq '{"state": [ .aircraft[] ] | length ,
+                     attributes: {"friendly_name": "Opensky Status",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "opensky_total"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$OS_AIRCRAFT_JSON" http://supervisor/core/api/states/sensor.opensky_status
+
+  OS_AIRCRAFT_ADSB_JSON=$(echo "$OS_AIRCRAFT" | jq '{"state": [ .aircraft[] | select(.nic != 0) ] | length ,
+                     attributes: {"friendly_name": "Opensky ADS-B",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "opensky_adsb"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$OS_AIRCRAFT_ADSB_JSON" http://supervisor/core/api/states/sensor.opensky_adsb
+
+  OS_AIRCRAFT_MLAT_JSON=$(echo "$OS_AIRCRAFT" | jq '{"state": [ .aircraft[] | select(.nic == 0) ] | length ,
+                     attributes: {"friendly_name": "Opensky MLAT",
+                                  "icon": "mdi:airplane",
+                                  "state_class": "measurement",
+                                  "unit_of_measurement": "aircraft",
+                                  "unique_id": "opensky_mlat"} }' )
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$OS_AIRCRAFT_MLAT_JSON" http://supervisor/core/api/states/sensor.opensky_mlat
+
 
   OS_STATS=$(curl -s http://localhost:8080/data/stats.json)
 
