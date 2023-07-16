@@ -2,6 +2,7 @@
 
 - New Feature : `Flightradar24` feeder support
 - New Feature : `Uptime` sensor for `adsb.fi` `Adsb Exchange` feeders
+- New Feature : `Max Range` sensor for all feeders
 
 ## [1.1.1] - 2023-06-27
 

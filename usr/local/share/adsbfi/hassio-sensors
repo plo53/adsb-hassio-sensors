@@ -80,6 +80,11 @@ doit_adsbfi(){
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
     -d "$ADSBFI_UPTIME_JSON" http://supervisor/core/api/states/sensor.adsbfi_uptime
+
+# Max Range
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$(/usr/local/share/adsbfi/adsbfi_max-range.py)"  http://supervisor/core/api/states/sensor.adsbfi_max_range
 }
 
 echo "Starting Adsb.fi hassio sensors api"

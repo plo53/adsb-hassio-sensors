@@ -59,6 +59,11 @@ doit_opensky(){
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
     -d "$OS_MODEAC_JSON" http://supervisor/core/api/states/sensor.opensky_mode_ac_rate
+
+# Max Range
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$(/usr/local/share/opensky/opensky_max-range.py)"  http://supervisor/core/api/states/sensor.opensky_max_range
 }
 
 echo "Starting Opensky hassio sensors api"
