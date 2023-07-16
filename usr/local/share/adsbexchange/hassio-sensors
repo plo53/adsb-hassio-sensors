@@ -81,6 +81,11 @@ doit_adsbexchange(){
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
     -d "$ADSBFI_UPTIME_JSON" http://supervisor/core/api/states/sensor.adsbx_uptime
+
+# Max Range
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$(/usr/local/share/adsbexchange/adsbx_max-range.py)"  http://supervisor/core/api/states/sensor.adsbx_max_range
 }
 
 echo "Starting AdsbExchange hassio sensors api"

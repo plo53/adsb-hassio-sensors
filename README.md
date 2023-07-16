@@ -27,6 +27,7 @@
 | `adsb.fi`             | `Adsb.fi Mode-S`                 | sensor.adsbfi_mode_s            | aircraft       |
 | `adsb.fi`             | `Adsb.fi MLAT`                   | sensor.adsbfi_mlat              | aircraft       |
 | `adsb.fi`             | `Adsb.fi Tracks`                 | sensor.adsbfi_tracks_all        | track          |
+| `adsb.fi`             | `Adsb.fi Max Range`              | sensor.adsbfi_max_range         | nm             |
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
@@ -36,6 +37,7 @@
 | `adsbexchange.com`    | `Adsb Exchange Mode-S`           | sensor.adsbx_mode_s             | aircraft       |
 | `adsbexchange.com`    | `Adsb Exchange MLAT`             | sensor.adsbx_mlat               | aircraft       |
 | `adsbexchange.com`    | `Adsb Exchange Tracks`           | sensor.adsbx_tracks_all         | track          |
+| `adsbexchange.com`    | `Adsb Exchange Max Range`        | sensor.adsbx_max_range          | nm             |
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
@@ -43,7 +45,7 @@
 | `flightradar24.com`   | `Flightradar24 Status`           | sensor.flightradar_status       | aircraft       |
 | `flightradar24.com`   | `Flightradar24 ADS-B`            | sensor.flightradar_adsb         | aircraft       |
 | `flightradar24.com`   | `Flightradar24 Non ADS-B`        | sensor.flightradar_non_adsb     | aircraft       |
-| `flightradar24.com`   | `Flightradar24 MAX Range`        | sensor.flightradar_max_range    | nm             |
+| `flightradar24.com`   | `Flightradar24 Max Range`        | sensor.flightradar_max_range    | nm             |
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
@@ -52,6 +54,7 @@
 | `opensky-network.org` | `Opensky MLAT`                   | sensor.opensky_mlat             | aircraft       |
 | `opensky-network.org` | `Opensky Mode-S Rate`            | sensor.opensky_mode_s_rate      | aircraft / min | 
 | `opensky-network.org` | `Opensky Mode-AC Rate`           | sensor.opensky_mode_ac_rate     | aircraft / min | 
+| `opensky-network.org` | `Opensky Max Range`              | sensor.opensky_max_range        | nm             | 
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
@@ -61,7 +64,12 @@
 | `planefinder.net`     | `Planefinder Mode-S Rate`        | sensor.planefinder_mode_s_rate  | packet / s     |
 | `planefinder.net`     | `Planefinder Mode-AC Rate`       | sensor.planefinder_mode_ac_rate | packet / s     |
 | `planefinder.net`     | `Planefinder Receiver Bandwidth` | sensor.planefinder_bandwidth    | Kb / s         |
+| `planefinder.net`     | `Planefinder Max Range`          | sensor.planefinder_max_range    | nm             |
 
+
+## Configuration
+
+  `Max Range` sensors require `MLAT_EXACT_LAT` `MLAT_EXACT_LON` configured
 
 ##
 

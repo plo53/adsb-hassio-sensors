@@ -69,6 +69,11 @@ doit_planefinder(){
 
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
     -d "$PF_MODEAC_JSON" http://supervisor/core/api/states/sensor.planefinder_mode_ac_rate
+
+# Max Range
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$(/usr/local/share/planefinder/planefinder_max-range.py)"  http://supervisor/core/api/states/sensor.planefinder_max_range
 }
 
 echo "Starting PlaneFinder hassio sensors api"
