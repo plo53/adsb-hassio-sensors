@@ -2,6 +2,8 @@
 
 doit_adsbfi(){
 
+# TOTAL tracked aircrafts
+  
   ADSBFI_TOTAL_JSON=$(jq '{state: (.aircraft_count_by_type.adsb_icao + .aircraft_count_by_type.mode_s + .aircraft_count_by_type.mlat) ,
                      attributes: {"friendly_name": "Adsb.fi Status",
                                   "icon": "mdi:airplane",
@@ -13,6 +15,7 @@ doit_adsbfi(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
     -d "$ADSBFI_TOTAL_JSON" http://supervisor/core/api/states/sensor.adsbfi_status
   
+# ADS-B tracked aircrafts
   
   ADSBFI_ICAO_JSON=$(jq '{state: .aircraft_count_by_type.adsb_icao ,
                     attributes: {"friendly_name": "Adsb.fi ADS-B",
@@ -25,6 +28,8 @@ doit_adsbfi(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBFI_ICAO_JSON" http://supervisor/core/api/states/sensor.adsbfi_adsb
   
+# MODE-S tracked aircrafts
+  
   ADSBFI_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
                      attributes: {"friendly_name": "Adsb.fi Mode-S",
                                   "icon": "mdi:airplane",
@@ -35,6 +40,8 @@ doit_adsbfi(){
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBFI_MODES_JSON" http://supervisor/core/api/states/sensor.adsbfi_mode_s
+  
+# MLAT tracked aircrafts
   
   ADSBFI_MLAT_JSON=$(jq '{state: .aircraft_count_by_type.mlat ,
                     attributes: {"friendly_name": "Adsb.fi MLAT",
@@ -47,6 +54,8 @@ doit_adsbfi(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBFI_MLAT_JSON" http://supervisor/core/api/states/sensor.adsbfi_mlat
 
+# TOTAL tracks since connected
+
   ADSBFI_TRACKS_JSON=$(jq '{state: .total.tracks.all ,
                     attributes: {"friendly_name": "Adsb.fi Tracks",
                                  "icon": "mdi:airplane",
@@ -57,6 +66,20 @@ doit_adsbfi(){
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBFI_TRACKS_JSON" http://supervisor/core/api/states/sensor.adsbfi_tracks_all
+
+# UPTIME
+
+  ADSBFI_UPTIME_S=$(jq '.uptime' /run/adsbfi-feed/status.json)
+
+  ADSBFI_UPTIME=$(python3 /usr/local/share/adsbfi/convert_uptime.py "$ADSBFI_UPTIME_S")
+
+  ADSBFI_UPTIME_JSON='{"state":'
+  ADSBFI_UPTIME_JSON+="\"$ADSBFI_UPTIME\""
+  ADSBFI_UPTIME_JSON+=',"attributes":'
+  ADSBFI_UPTIME_JSON+='{"friendly_name":"Adsb.fi Uptime","icon":"mdi:timer","unique_id":"adsbfi_uptime"}}'
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$ADSBFI_UPTIME_JSON" http://supervisor/core/api/states/sensor.adsbfi_uptime
 }
 
 echo "Starting Adsb.fi hassio sensors api"

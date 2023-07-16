@@ -2,6 +2,9 @@
 
 
 doit_adsbexchange(){
+
+# TOTAL tracked aircrafts
+
   ADSBX_TOTAL_JSON=$(jq '{state: (.aircraft_count_by_type.adsb_icao + .aircraft_count_by_type.mode_s + .aircraft_count_by_type.mlat) ,
                      attributes: {"friendly_name": "Adsb Exchange Status",
                                   "icon": "mdi:airplane",
@@ -13,6 +16,7 @@ doit_adsbexchange(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
     -d "$ADSBX_TOTAL_JSON" http://supervisor/core/api/states/sensor.adsbx_status
   
+# ADS-B tracked aircrafts
   
   ADSBX_ICAO_JSON=$(jq '{state: .aircraft_count_by_type.adsb_icao ,
                     attributes: {"friendly_name": "Adsb Exchange ADS-B",
@@ -25,6 +29,8 @@ doit_adsbexchange(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBX_ICAO_JSON" http://supervisor/core/api/states/sensor.adsbx_adsb
   
+# MODE-S tracked aircrafts
+
   ADSBX_MODES_JSON=$(jq '{state: .aircraft_count_by_type.mode_s ,
                      attributes: {"friendly_name": "Adsb Exchange Mode-S",
                                   "icon": "mdi:airplane",
@@ -36,6 +42,8 @@ doit_adsbexchange(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBX_MODES_JSON" http://supervisor/core/api/states/sensor.adsbx_mode_s
   
+# MLAT tracked aircrafts
+
   ADSBX_MLAT_JSON=$(jq '{state: .aircraft_count_by_type.mlat ,
                     attributes: {"friendly_name": "Adsb Exchange MLAT",
                                  "icon": "mdi:airplane",
@@ -46,6 +54,8 @@ doit_adsbexchange(){
   
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBX_MLAT_JSON" http://supervisor/core/api/states/sensor.adsbx_mlat
+
+# TOTAL tracks since connected
 
   ADSBX_TRACKS_JSON=$(jq '{state: .total.tracks.all ,
                     attributes: {"friendly_name": "Adsb Exchange Tracks",
@@ -58,6 +68,19 @@ doit_adsbexchange(){
   curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json"\
     -d "$ADSBX_TRACKS_JSON" http://supervisor/core/api/states/sensor.adsbx_tracks_all
 
+# UPTIME
+
+  ADSBX_UPTIME_S=$(jq '.uptime' /run/adsbexchange-feed/status.json)
+
+  ADSBX_UPTIME=$(python3 /usr/local/share/adsbexchange/convert_uptime.py "$ADSBX_UPTIME_S")
+
+  ADSBX_UPTIME_JSON='{"state":'
+  ADSBX_UPTIME_JSON+="\"$ADSBX_UPTIME\""
+  ADSBX_UPTIME_JSON+=',"attributes":'
+  ADSBX_UPTIME_JSON+='{"friendly_name":"Adsb Exchange Uptime","icon":"mdi:timer","unique_id":"adsbx_uptime"}}'
+
+  curl -s -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" -H "Content-Type: application/json" \
+    -d "$ADSBFI_UPTIME_JSON" http://supervisor/core/api/states/sensor.adsbx_uptime
 }
 
 echo "Starting AdsbExchange hassio sensors api"
