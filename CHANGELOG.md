@@ -1,6 +1,7 @@
 ## [1.1.2] - 2023-07-16
 
 - New Feature : `Flightradar24` feeder support
+- New Feature : `Uptime` sensor for `adsb.fi` `Adsb Exchange` feeders
 
 ## [1.1.1] - 2023-06-27
 

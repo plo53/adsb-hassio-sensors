@@ -21,6 +21,7 @@
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
+| `adsb.fi`             | `Adsb.fi Uptime`                 | sensor.adsbfi_uptime            |                |
 | `adsb.fi`             | `Adsb.fi Status`                 | sensor.adsbfi_status            | aircraft       |
 | `adsb.fi`             | `Adsb.fi ADS-B`                  | sensor.adsbfi_adsb              | aircraft       |
 | `adsb.fi`             | `Adsb.fi Mode-S`                 | sensor.adsbfi_mode_s            | aircraft       |
@@ -29,6 +30,7 @@
 
 | Feeder                | Friendly name                    | Sensor                          | Unit           |
 | --------------------- | -------------------------------- | ------------------------------- | -------------- |
+| `adsbexchange.com`    | `Adsb Exchange Uptime`           | sensor.adsbx_uptime             |                |
 | `adsbexchange.com`    | `Adsb Exchange Status`           | sensor.adsbx_status             | aircraft       |
 | `adsbexchange.com`    | `Adsb Exchange ADS-B`            | sensor.adsbx_adsb               | aircraft       |
 | `adsbexchange.com`    | `Adsb Exchange Mode-S`           | sensor.adsbx_mode_s             | aircraft       |
